@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="Aplicación simple para controlar ingresos y gastos personales.">
+  <title>Control de Gastos</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Control de Gastos, inicio"><span class="brand-mark">C</span><span>Control<span class="brand-light">.</span></span></a>
+      <div class="side-caption">TU ESPACIO</div>
+      <a class="nav-link active" href="#resumen"><span>▦</span> Resumen</a>
+      <a class="nav-link" href="#movimientos"><span>↕</span> Movimientos</a>
+      <div class="sidebar-note"><span class="note-icon">✦</span><strong>Pequeños hábitos,<br>grandes resultados.</strong><p>Registrá tus movimientos y entendé mejor tus finanzas.</p></div>
+      <div class="side-footer">CONTROL PERSONAL<br><span>Versión 1.0 · Proyecto demo</span></div>
+    </aside>
+
+    <main class="main-content" id="resumen">
+      <header class="topbar"><div><p class="eyebrow">PANEL PERSONAL</p><h1>Resumen financiero</h1><p class="subtitle">Una mirada clara a tus ingresos y gastos.</p></div><div class="today-chip"><span class="live-dot"></span> Tus datos, en este dispositivo</div></header>
+
+      <section class="summary-grid" aria-label="Resumen">
+        <article class="summary-card balance-card"><div class="card-top"><span>Balance total</span><span class="card-icon">◈</span></div><strong id="balanceValue">$ 0,00</strong><p>Ingresos menos gastos</p><div class="balance-decoration"></div></article>
+        <article class="summary-card"><div class="card-top"><span>Ingresos</span><span class="card-icon income-icon">↗</span></div><strong id="incomeValue">$ 0,00</strong><p class="muted">Total registrado</p></article>
+        <article class="summary-card"><div class="card-top"><span>Gastos</span><span class="card-icon expense-icon">↘</span></div><strong id="expenseValue">$ 0,00</strong><p class="muted">Total registrado</p></article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel form-panel">
+          <div class="panel-heading"><div><p class="eyebrow">NUEVO REGISTRO</p><h2>Agregar movimiento</h2></div><span class="heading-spark">✳</span></div>
+          <form id="movementForm">
+            <div class="type-switch" role="group" aria-label="Tipo de movimiento"><button type="button" class="type-button selected" data-type="gasto" aria-pressed="true">− Gasto</button><button type="button" class="type-button" data-type="ingreso" aria-pressed="false">＋ Ingreso</button></div>
+            <label for="description">Descripción</label><input id="description" name="description" maxlength="70" placeholder="Ej. Supermercado" required>
+            <div class="field-row"><div><label for="amount">Importe ($)</label><input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0,00" required></div><div><label for="category">Categoría</label><select id="category" name="category" required><option value="Alimentación">Alimentación</option><option value="Transporte">Transporte</option><option value="Hogar">Hogar</option><option value="Servicios">Servicios</option><option value="Salud">Salud</option><option value="Ocio">Ocio</option><option value="Trabajo">Trabajo</option><option value="Sueldo">Sueldo</option><option value="Otros">Otros</option></select></div></div>
+            <label for="date">Fecha</label><input id="date" name="date" type="date" required>
+            <button class="primary-button" type="submit">＋ Guardar movimiento</button><p class="form-hint" id="formMessage" aria-live="polite">El registro se guarda en este navegador.</p>
+          </form>
+        </article>
+
+        <article class="panel chart-panel">
+          <div class="panel-heading"><div><p class="eyebrow">ACTIVIDAD</p><h2>Ingresos vs. gastos</h2></div><span class="chart-period">Acumulado</span></div>
+          <div class="chart-legend"><span><i class="legend-dot income-dot"></i> Ingresos</span><span><i class="legend-dot expense-dot"></i> Gastos</span></div>
+          <div class="comparison" aria-label="Comparación de ingresos y gastos"><div class="comparison-row"><div class="comparison-label"><span>Ingresos</span><strong id="incomePercent">0%</strong></div><div class="track"><div id="incomeBar" class="bar income-bar"></div></div></div><div class="comparison-row"><div class="comparison-label"><span>Gastos</span><strong id="expensePercent">0%</strong></div><div class="track"><div id="expenseBar" class="bar expense-bar"></div></div></div></div>
+          <div class="chart-foot"><span>Distribución según tus registros</span><span id="movementCount">0 movimientos</span></div>
+          <div class="tip-box"><span>✦</span><p><strong>Consejo:</strong> registrá tus movimientos con regularidad para mantener un panorama actualizado.</p></div>
+        </article>
+      </section>
+
+      <section class="panel transactions-panel" id="movimientos">
+        <div class="transactions-heading"><div><p class="eyebrow">TU ACTIVIDAD</p><h2>Últimos movimientos</h2></div><div class="table-actions"><select id="filterType" aria-label="Filtrar movimientos"><option value="todos">Todos</option><option value="ingreso">Ingresos</option><option value="gasto">Gastos</option></select><button id="exportButton" class="secondary-button" type="button">↓ Exportar CSV</button></div></div>
+        <div class="table-wrap"><table><thead><tr><th>DESCRIPCIÓN</th><th>CATEGORÍA</th><th>FECHA</th><th>TIPO</th><th class="align-right">IMPORTE</th><th></th></tr></thead><tbody id="movementList"><tr><td colspan="6" class="empty-state">Todavía no hay movimientos. Agregá el primero desde el formulario.</td></tr></tbody></table></div>
+        <p class="table-footnote">Los importes se muestran en pesos argentinos (ARS).</p>
+      </section>
+      <footer class="footer">Hecho para aprender · Los datos permanecen en tu navegador.</footer>
+    </main>
+  </div>
+</body>
+</html>
